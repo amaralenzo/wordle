@@ -188,13 +188,13 @@ body {
 .tile.correct {
     background-color: var(--color-success);
     border-color: var(--color-success);
-    color: white;
+    color: green;
 }
 
 .tile.present {
     background-color: var(--color-present);
     border-color: var(--color-present);
-    color: white;
+    color: yellow;
 }
 
 .tile.absent {
@@ -312,17 +312,17 @@ body {
 /* Keyboard key states */
 .key.correct {
     background-color: var(--color-success);
-    color: white;
+    color: green;
 }
 
 .key.present {
     background-color: var(--color-present);
-    color: white;
+    color: yellow;
 }
 
 .key.absent {
     background-color: var(--color-absent);
-    color: white;
+    color: gainsboro;
 }
 
 .key svg {
