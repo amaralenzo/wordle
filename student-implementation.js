@@ -297,7 +297,7 @@ function processRowReveal(rowIndex, results) {
     isCorrect = results.every((status) => status === 'correct');
     if (isCorrect)
     {
-        celebrateRow(currentRow);
+        celebrateRow(rowIndex);
     }
     
     // TODO: If all correct, trigger celebration
