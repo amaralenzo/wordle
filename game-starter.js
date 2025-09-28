@@ -1,9 +1,9 @@
 /**
  * WORDLE CLONE - STARTER CODE
- * 
+ *
  * This file provides the basic structure and utility functions for the Wordle game.
  * Students will implement the core game logic in student-implementation.js
- * 
+ *
  * PROVIDED FUNCTIONALITY:
  * - DOM element references
  * - Game constants
@@ -100,9 +100,9 @@ function getRowTiles(row) {
  */
 function updateTileDisplay(tile, letter) {
     if (!tile) return;
-    
+
     tile.textContent = letter.toUpperCase();
-    
+
     if (letter) {
         tile.classList.add('filled');
         // Add typing animation
@@ -121,10 +121,10 @@ function updateTileDisplay(tile, letter) {
  */
 function setTileState(tile, state) {
     if (!tile) return;
-    
+
     // Remove any existing state classes
     tile.classList.remove('correct', 'present', 'absent');
-    
+
     // Add the new state class
     if (state) {
         tile.classList.add(state);
@@ -139,10 +139,10 @@ function setTileState(tile, state) {
 function updateKeyboardKey(key, state) {
     const keyElement = document.querySelector(`[data-key="${key.toUpperCase()}"]`);
     if (!keyElement) return;
-    
+
     // Don't downgrade key colors (correct > present > absent)
     const currentClasses = keyElement.classList;
-    
+
     if (state === 'correct') {
         keyElement.classList.remove('present', 'absent');
         keyElement.classList.add('correct');
@@ -163,10 +163,10 @@ function updateKeyboardKey(key, state) {
 function showMessage(text, type = 'info', duration = 2000) {
     messageElement.textContent = text;
     messageElement.className = `message ${type}`;
-    
+
     // Force reflow and show
     messageElement.offsetHeight;
-    
+
     setTimeout(() => {
         messageElement.classList.add('hidden');
     }, duration);
@@ -180,19 +180,19 @@ function showMessage(text, type = 'info', duration = 2000) {
  */
 function showModal(won, word, guesses = 0) {
     modalTitle.textContent = won ? 'Congratulations!' : 'Game Over';
-    
+
     if (won) {
         const guessText = guesses === 1 ? 'guess' : 'guesses';
         modalMessage.textContent = `You solved it in ${guesses} ${guessText}!`;
     } else {
         modalMessage.textContent = `The word was:`;
     }
-    
+
     modalWord.textContent = word;
-    
+
     // Update statistics display
     updateStatsDisplay();
-    
+
     modal.classList.remove('hidden');
 }
 
@@ -208,12 +208,12 @@ function hideModal() {
  */
 function updateStatsDisplay() {
     gamesPlayedElement.textContent = gameStats.gamesPlayed;
-    
-    const winPercentage = gameStats.gamesPlayed > 0 
+
+    const winPercentage = gameStats.gamesPlayed > 0
         ? Math.round((gameStats.gamesWon / gameStats.gamesPlayed) * 100)
         : 0;
     winPercentageElement.textContent = winPercentage;
-    
+
     currentStreakElement.textContent = gameStats.currentStreak;
     maxStreakElement.textContent = gameStats.maxStreak;
 }
@@ -226,15 +226,15 @@ function resetBoard() {
         tile.textContent = '';
         tile.className = 'tile';
     });
-    
+
     keys.forEach(key => {
         key.classList.remove('correct', 'present', 'absent');
     });
-    
+
     tileRows.forEach(row => {
         row.classList.remove('shake', 'celebrate');
     });
-    
+
     messageElement.classList.add('hidden');
 }
 
@@ -271,31 +271,31 @@ function celebrateRow(rowIndex) {
 function flipRowTiles(rowIndex, states, callback) {
     const rowTiles = getRowTiles(rowIndex);
     let completedAnimations = 0;
-    
+
     rowTiles.forEach((tile, index) => {
         // Delay each tile's animation slightly
         setTimeout(() => {
             tile.classList.add('flip');
-            
+
             // Set the final state halfway through the flip
             setTimeout(() => {
                 if (states[index]) {
                     setTileState(tile, states[index]);
                 }
-                
+
                 // Remove flip class when animation completes
                 setTimeout(() => {
                     tile.classList.remove('flip');
                     completedAnimations++;
-                    
+
                     // Call callback when all animations complete
                     if (completedAnimations === rowTiles.length && callback) {
                         callback();
                     }
                 }, FLIP_ANIMATION_DURATION / 2);
-                
+
             }, FLIP_ANIMATION_DURATION / 2);
-            
+
         }, index * 100); // Stagger the animations
     });
 }
@@ -331,7 +331,7 @@ function saveStats() {
  */
 function updateStats(won) {
     gameStats.gamesPlayed++;
-    
+
     if (won) {
         gameStats.gamesWon++;
         gameStats.currentStreak++;
@@ -339,7 +339,7 @@ function updateStats(won) {
     } else {
         gameStats.currentStreak = 0;
     }
-    
+
     saveStats();
 }
 
@@ -352,9 +352,9 @@ function updateStats(won) {
  */
 document.addEventListener('keydown', (event) => {
     if (gameOver) return;
-    
+
     const key = event.key.toUpperCase();
-    
+
     // Handle letter keys
     if (/^[A-Z]$/.test(key)) {
         // Add visual feedback to physical key press
@@ -363,7 +363,7 @@ document.addEventListener('keydown', (event) => {
             keyElement.classList.add('pressed');
             setTimeout(() => keyElement.classList.remove('pressed'), 100);
         }
-        
+
         // Students will implement this function
         if (typeof handleKeyPress === 'function') {
             handleKeyPress(key);
@@ -377,7 +377,7 @@ document.addEventListener('keydown', (event) => {
             enterKey.classList.add('pressed');
             setTimeout(() => enterKey.classList.remove('pressed'), 100);
         }
-        
+
         if (typeof handleKeyPress === 'function') {
             handleKeyPress('ENTER');
         }
@@ -390,7 +390,7 @@ document.addEventListener('keydown', (event) => {
             backspaceKey.classList.add('pressed');
             setTimeout(() => backspaceKey.classList.remove('pressed'), 100);
         }
-        
+
         if (typeof handleKeyPress === 'function') {
             handleKeyPress('BACKSPACE');
         }
@@ -402,16 +402,16 @@ document.addEventListener('keydown', (event) => {
  */
 keyboard.addEventListener('click', (event) => {
     if (gameOver) return;
-    
+
     const key = event.target.closest('.key');
     if (!key) return;
-    
+
     const keyValue = key.dataset.key;
-    
+
     // Add visual feedback
     key.classList.add('pressed');
     setTimeout(() => key.classList.remove('pressed'), 100);
-    
+
     // Students will implement this function
     if (typeof handleKeyPress === 'function') {
         handleKeyPress(keyValue);
@@ -462,7 +462,7 @@ modal.addEventListener('click', (event) => {
  */
 document.addEventListener('DOMContentLoaded', () => {
     loadStats();
-    
+
     // Students will implement this function
     if (typeof initializeGame === 'function') {
         initializeGame();

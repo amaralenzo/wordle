@@ -101,7 +101,8 @@ const ADDITIONAL_VALID_WORDS = [
     "AVIAN", "AVOID", "AWAKE", "AWARD", "AWARE", "AWASH", "AWFUL", "AWOKE", "AXIAL", "AXIOM",
     "AXION", "AZURE", "BACON", "BADGE", "BADLY", "BAGEL", "BAGGY", "BAKER", "BALER", "BALMY",
     "BANAL", "BANJO", "BARGE", "BARON", "BASAL", "BASED", "BASER", "BASIC", "BASIL", "BASIN",
-    "BASIS", "BASTE", "BATCH", "BATHE", "BATON", "BATTY", "BAWDY", "BAYOU", "BEACH", "BEADY"
+    "BASIS", "BASTE", "BATCH", "BATHE", "BATON", "BATTY", "BAWDY", "BAYOU", "BEACH", "BEADY",
+    "FRITZ", "ADIEU", "QUEUE"
 ];
 
 // Combine all valid words for checking guesses
